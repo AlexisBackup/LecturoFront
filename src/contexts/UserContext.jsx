@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
     const canOnlyManageEvent = (userState.data?.isOrganizerOfEvent && !isAdministrator) || false;
 
     useEffect(() => {
-        fetchUserData();
+        fetchUser();
     }, []);
 
     useEffect(() => {
@@ -31,15 +31,20 @@ export const UserProvider = ({ children }) => {
         updateCurrentEvent();
     }, [currentEventId, userState.data?.events]);
 
-    const fetchUserData = async () => {
+    const fetchUser = async (force = false) => {
+      if(!force && userState.data){
+        return;
+      }
         try {
             const jwt = Cookies.get("jwt_token");
 
             if (!jwt) {
+              
                 setUserState({ data: null, loading: false, error: null });
                 return;
             }
 
+            setUserState(prev=>({...prev,loading :true}))
             const response = await axiosInstance.get("api/user");
             setUserState({ data: response.data, loading: false, error: null });
         } catch (err) {
@@ -77,6 +82,7 @@ export const UserProvider = ({ children }) => {
         canOnlyManageEvent,
         flushAllData,
     };
+    value.fetchUser = fetchUser;
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

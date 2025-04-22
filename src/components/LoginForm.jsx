@@ -19,8 +19,8 @@ export function LoginForm({ onClose, darkMode }) {
     console.log(data);
     try {
       const response = await axiosInstance.post("/api/login_check", {
-        username: "user@lecturo.com",
-        password: "password",
+        username: data._username,
+        password: data._password,
       });
 
       const { token } = response.data;

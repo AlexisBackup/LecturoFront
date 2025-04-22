@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookPlus, ScrollText, Library, Search, Plus, Settings, LogOut, User, BookOpen } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 
@@ -7,8 +7,12 @@ export default function ProfilePage({ darkMode }) {
   const [showAddSummary, setShowAddSummary] = useState(false);
   const [activeTab, setActiveTab] = useState('library'); // 'library' or 'settings'
 
-  
-  const { userState } = useUser();
+  const { userState, fetchUser } = useUser();
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   const user = userState.data;
 
   if (userState.loading) {
