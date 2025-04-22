@@ -9,7 +9,7 @@ import HomePage from './components/pages/HomePage';
 import ProfilePage from './components/pages/ProfilePage';
 import { useLocation } from 'react-router-dom';
 
-function App({ flash, user }) {
+function App({ flash }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -46,7 +46,6 @@ function App({ flash, user }) {
         toggleDarkMode={() => setDarkMode(prev => !prev)}
         setShowLogin={setShowLogin}
         setShowRegister={setShowRegister}
-        user={user}
       />
 
       {/* Modal Forms */}
@@ -61,19 +60,19 @@ function App({ flash, user }) {
             <HomePage darkMode={darkMode} setShowRegister={setShowRegister} />
           }
         />
-        <Route path="/profile" element={<ProfilePage user={user} />} />
+        <Route path="/profile" element={<ProfilePage />} />
         {/* Tu pourras ajouter d'autres routes ici plus tard */}
       </Routes>
 
       {/* Footer */}
-      <footer className={`${darkMode ? 'bg-gray-800' : 'bg-gray-50'} mt-24`}>
+      <footer className={`${darkMode ? 'bg-gray-800' : 'bg-gray-100'} mt-24`}>
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <Library className={`h-6 w-6 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+              <Library className={`h-6 w-6 ${darkMode ? 'text-gray-400' : 'text-gray-900'}`} />
               <span className={`ml-2 text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Lecturo</span>
             </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>© 2025 Lecturo. Tous droits réservés.</p>
+            <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>© 2024 Lecturo. Tous droits réservés.</p>
           </div>
         </div>
       </footer>

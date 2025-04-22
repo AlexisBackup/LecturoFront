@@ -18,7 +18,6 @@ export function RegisterForm({ onClose, darkMode }) {
   const onSubmit = async (data) => {
     try {
       const result = await submitForm('/register', data);
-      console.log(result);
 
       if (result === 'registration success') {
         onClose(); // Ferme la modale
@@ -112,7 +111,7 @@ export function RegisterForm({ onClose, darkMode }) {
           </div>
           <button
             type="submit"
-            className={`w-full ${darkMode ? 'bg-blue-500 hover:bg-blue-600' : 'bg-blue-600 hover:bg-blue-700'
+            className={`w-full ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-900 hover:bg-gray-800'
               } text-white font-medium rounded-lg px-5 py-2.5 text-center transition-colors`}
           >
             Créer un compte

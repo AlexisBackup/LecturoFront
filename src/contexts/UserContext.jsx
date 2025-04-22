@@ -83,6 +83,7 @@ export const UserProvider = ({ children }) => {
         isAdministrator,
         canOnlyManageEvent,
         flushAllData,
+        fetchUser
     };
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
