@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { BookPlus, ScrollText, Library, Search, Plus, Settings, LogOut, User, BookOpen } from 'lucide-react';
+import { useUser } from '@/contexts/UserContext';
 
-export default function ProfilePage({ darkMode, user }) {
+export default function ProfilePage({ darkMode }) {
   const [showAddBook, setShowAddBook] = useState(false);
   const [showAddSummary, setShowAddSummary] = useState(false);
   const [activeTab, setActiveTab] = useState('library'); // 'library' or 'settings'
+
+  
+  const { userState } = useUser();
+  const user = userState.data;
+
+  if (userState.loading) {
+    return <div className="p-8 text-center text-gray-500">Chargement...</div>;
+  }
+  
+  if (!user) {
+    return <div className="p-8 text-center text-red-500">Aucun utilisateur connecté.</div>;
+  }
 
   // Placeholder data for books
   const books = [

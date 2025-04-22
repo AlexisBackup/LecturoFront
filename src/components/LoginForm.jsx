@@ -1,9 +1,10 @@
 import React from 'react';
 import { X, Mail, Lock } from 'lucide-react';
-import { submitForm } from './api';
 import { useForm } from "react-hook-form";
 import { CustomInput } from './CustomInput';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from "@/services/axiosInstance";
+import Cookies from "js-cookie";
 
 export function LoginForm({ onClose, darkMode }) {
   const navigate = useNavigate();
@@ -15,13 +16,21 @@ export function LoginForm({ onClose, darkMode }) {
   } = useForm()
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      const result = await submitForm('/login', data);
+      const response = await axiosInstance.post("/api/login_check", {
+        username: "user@lecturo.com",
+        password: "password",
+      });
 
-      if (result) {
-        window.location.href = '/profile';
-      }
+      const { token } = response.data;
       // redirection ou message flash...
+
+      // Stocker le token
+      Cookies.set("jwt_token", token, { secure: true });
+
+      // Rediriger vers une page protégée
+      navigate("/profile");
     } catch (error) {
       console.error("Erreur :", error);
       // afficher les erreurs dans le formulaire...
@@ -74,21 +83,21 @@ export function LoginForm({ onClose, darkMode }) {
               register={register}
               rules={{
                 required: "Le mot de passe est requis",
-                minLength: {
-                  value: 8,
-                  message: "Le mot de passe doit contenir au moins 8 caractères",
-                },
-                validate: {
-                  hasUppercase: (v) =>
-                    /[A-Z]/.test(v) || "Au moins une majuscule requise",
-                  hasLowercase: (v) =>
-                    /[a-z]/.test(v) || "Au moins une minuscule requise",
-                  hasNumber: (v) =>
-                    /[0-9]/.test(v) || "Au moins un chiffre requis",
-                  hasSpecialChar: (v) =>
-                    /[!@#$%^&*(),.?\":{}|<>]/.test(v) ||
-                    "Au moins un caractère spécial requis",
-                },
+                // minLength: {
+                //   value: 8,
+                //   message: "Le mot de passe doit contenir au moins 8 caractères",
+                // },
+                // validate: {
+                //   hasUppercase: (v) =>
+                //     /[A-Z]/.test(v) || "Au moins une majuscule requise",
+                //   hasLowercase: (v) =>
+                //     /[a-z]/.test(v) || "Au moins une minuscule requise",
+                //   hasNumber: (v) =>
+                //     /[0-9]/.test(v) || "Au moins un chiffre requis",
+                //   hasSpecialChar: (v) =>
+                //     /[!@#$%^&*(),.?\":{}|<>]/.test(v) ||
+                //     "Au moins un caractère spécial requis",
+                // },
               }}
               darkMode={darkMode}
               placeholder={"••••••"}

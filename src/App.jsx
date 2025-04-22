@@ -9,7 +9,7 @@ import HomePage from './components/pages/HomePage';
 import ProfilePage from './components/pages/ProfilePage';
 import { useLocation } from 'react-router-dom';
 
-function App({ loginAction, registerAction, flash, user }) {
+function App({ flash, user }) {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -50,8 +50,8 @@ function App({ loginAction, registerAction, flash, user }) {
       />
 
       {/* Modal Forms */}
-      {showLogin && <LoginForm action={loginAction} onClose={() => setShowLogin(false)} darkMode={darkMode} />}
-      {showRegister && <RegisterForm action={registerAction} onClose={() => setShowRegister(false)} darkMode={darkMode} />}
+      {showLogin && <LoginForm onClose={() => setShowLogin(false)} darkMode={darkMode} />}
+      {showRegister && <RegisterForm onClose={() => setShowRegister(false)} darkMode={darkMode} />}
 
       {/* ROUTES */}
       <Routes>
