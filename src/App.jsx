@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useUser } from './contexts/UserContext';
 import { Routes, Route } from 'react-router-dom';
 import { Library } from 'lucide-react';
 import { LoginForm } from './components/LoginForm';
@@ -11,7 +10,6 @@ import ProfilePage from './components/pages/ProfilePage';
 import { useLocation } from 'react-router-dom';
 
 function App({ flash, user }) {
-  const { fetchUser } = useUser()
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -26,11 +24,7 @@ function App({ flash, user }) {
       // Optionnel : nettoyage du flash message de l'historique pour éviter qu'il réapparaisse au refresh
       window.history.replaceState({}, document.title);
     }
-  }, [location]);
-  
-  useEffect(() => {
-    fetchUser(true);
-  }, []);
+  }, [location.state]);
 
 
   return (
