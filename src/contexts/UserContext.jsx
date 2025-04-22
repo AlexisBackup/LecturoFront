@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
     const canOnlyManageEvent = (userState.data?.isOrganizerOfEvent && !isAdministrator) || false;
 
     useEffect(() => {
-        fetchUser();
+      if (userState.data === null) fetchUser();
     }, []);
 
     useEffect(() => {
@@ -71,6 +71,7 @@ export const UserProvider = ({ children }) => {
         setCurrentEventId(null);
         setCurrentEvent(null);
         Cookies.remove("jwt_token");
+        
         Cookies.remove("selectedEventId");
     };
 
@@ -83,6 +84,7 @@ export const UserProvider = ({ children }) => {
         isAdministrator,
         canOnlyManageEvent,
         flushAllData,
+        fetchUser,
     };
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
