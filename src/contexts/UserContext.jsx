@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { AxiosError } from "axios";
 import axiosInstance from "@/services/axiosInstance";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,9 @@ export const UserProvider = ({ children }) => {
         updateCurrentEvent();
     }, [currentEventId, userState.data?.events]);
 
-    const fetchUser = async (force = false) => {
+    const fetchUser = useCallback(async (force = false) => {
+      
+
       if(!force && userState.data){
         return;
       }
@@ -58,7 +60,7 @@ export const UserProvider = ({ children }) => {
                 }
             }
         }
-    };
+    },[userState.data,navigate]);
 
     const changeCurrentEvent = (eventId) => {
         setCurrentEventId(eventId);
@@ -82,7 +84,6 @@ export const UserProvider = ({ children }) => {
         canOnlyManageEvent,
         flushAllData,
     };
-    value.fetchUser = fetchUser;
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -11,7 +11,7 @@ export default function ProfilePage({ darkMode }) {
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+  }, []);
 
   const user = userState.data;
 
