@@ -7,11 +7,7 @@ export default function ProfilePage({ darkMode, onLogout }) {
   const [showAddSummary, setShowAddSummary] = useState(false);
   const [activeTab, setActiveTab] = useState('library'); // 'library' or 'settings'
 
-  const { userState, fetchUser } = useUser();
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const { userState } = useUser();
 
   const user = userState.data;
 

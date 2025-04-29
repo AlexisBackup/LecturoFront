@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Library } from 'lucide-react';
 import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
@@ -7,7 +7,7 @@ import { NavBar } from './components/NavBar';
 import { FlashMessage } from './components/FlashMessage';
 import HomePage from './components/pages/HomePage';
 import ProfilePage from './components/pages/ProfilePage';
-import { useLocation } from 'react-router-dom';
+
 
 function App({ flash }) {
   const [showLogin, setShowLogin] = useState(false);
@@ -60,7 +60,10 @@ function App({ flash }) {
             <HomePage darkMode={darkMode} setShowRegister={setShowRegister} />
           }
         />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/profile"
+          element={<ProfilePage />}
+        />
         {/* Tu pourras ajouter d'autres routes ici plus tard */}
       </Routes>
 

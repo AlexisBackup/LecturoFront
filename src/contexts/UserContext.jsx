@@ -68,10 +68,7 @@ export const UserProvider = ({ children }) => {
 
     const flushAllData = () => {
         setUserState({ data: null, loading: false, error: null });
-        setCurrentEventId(null);
-        setCurrentEvent(null);
         Cookies.remove("jwt_token");
-        Cookies.remove("selectedEventId");
     };
 
     const value = {

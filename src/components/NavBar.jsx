@@ -1,9 +1,14 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { BookOpen, UserPlus, Moon, Sun } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useUser } from "@/contexts/UserContext";
+import { useAuth } from '../hook/useAuth';
 
 
-export function NavBar({ darkMode, toggleDarkMode, setShowLogin, setShowRegister, user }) {
+export function NavBar({ darkMode, toggleDarkMode, setShowLogin, setShowRegister }) {
+    const { userState } = useUser();
+    const isLoggedIn = !!userState.data;
+    const {logout } = useAuth();
 
     const renderAuthButtons = () => (
         <>
@@ -37,7 +42,13 @@ export function NavBar({ darkMode, toggleDarkMode, setShowLogin, setShowRegister
                     >
                         {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                     </button>
-                    {renderAuthButtons()}
+                    {isLoggedIn ? (
+                        <>
+                            <Link to="/profile">Mon profil</Link>
+                            <button onClick={logout}>Déconnexion</button>
+                        </>
+                    ) : renderAuthButtons()
+                    }
                 </div>
             </nav>
         </header>

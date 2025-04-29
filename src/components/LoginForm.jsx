@@ -5,6 +5,8 @@ import { CustomInput } from './CustomInput';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from "@/services/axiosInstance";
 import Cookies from "js-cookie";
+import { useAuth } from '../hook/useAuth';
+
 
 export function LoginForm({ onClose, darkMode }) {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ export function LoginForm({ onClose, darkMode }) {
     formState: { errors },
     handleSubmit,
   } = useForm()
+
+  const {fetchUserData} = useAuth();
 
   const onSubmit = async (data) => {
     try {
@@ -30,6 +34,7 @@ export function LoginForm({ onClose, darkMode }) {
       Cookies.set("jwt_token", token, { secure: true });
 
       onClose();
+      await fetchUserData();
       // Rediriger vers une page protégée
       navigate("/profile");
     } catch (error) {
